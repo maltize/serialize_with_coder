@@ -1,7 +1,7 @@
 Serialize with Coder
 ====================
 
-serialize_with_coder is an ActiveRecord extended serialize function which acts like Rails 3.1 one - you can use custom coder as storing engine.
+serialize_with_coder is an ActiveRecord 2.x extended serialize function which acts like Rails 3.1 one - you can use custom coder as storing engine.
 
 Including 2 sample coders:
 
@@ -19,6 +19,19 @@ Example
       serialize_with_coder :newsletters, SerializeWithCoder::CSVCoder.new
       serialize_with_coder :notes,       SerializeWithCoder::JSONCoder.new
 
+    end
+
+Example coder
+-------------
+
+    class JSONCoder
+      def load(data)
+        JSON.parse(data) rescue nil
+      end
+
+      def dump(obj)
+        obj.to_json rescue nil
+      end
     end
 
 Installation

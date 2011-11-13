@@ -11,6 +11,9 @@ Including 2 sample coders:
 Example
 -------
 
+    require 'coders/csv_coder'
+    require 'coders/json_coder'
+
     class User < ActiveRecord::Base
 
       serialize_with_coder :newsletters, SerializeWithCoder::CSVCoder.new

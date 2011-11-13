@@ -9,8 +9,6 @@ require 'serialize_with_coder'
 require 'coders/csv_coder'
 require 'coders/json_coder'
 
-require 'init'
-
 ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => ':memory:')
 
 [:users].each do |table|

@@ -66,3 +66,5 @@ module SerializeWithCoder
     end
   end
 end
+
+ActiveRecord::Base.extend(SerializeWithCoder::ClassMethods)

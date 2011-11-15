@@ -98,4 +98,28 @@ class SerializeWithCoderTest < Test::Unit::TestCase
     assert user.notes.include?(@note2)
   end
 
+  def test_changed
+    assert !@user.newsletters_changed?
+
+    @user.newsletters = ["FREE", "PREMIUM"]
+
+    assert @user.newsletters_changed?
+  end
+
+  def test_change
+    assert_nil @user.newsletters_change
+
+    @user.newsletters = ["FREE", "PREMIUM"]
+
+    assert_equal [[], ["FREE", "PREMIUM"]], @user.newsletters_change
+  end
+
+  def test_was
+    assert_equal [], @user.newsletters_was
+
+    @user.newsletters = ["FREE", "PREMIUM"]
+
+    assert_equal [], @user.newsletters_was
+  end
+
 end

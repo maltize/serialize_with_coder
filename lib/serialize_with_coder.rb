@@ -38,23 +38,17 @@ module SerializeWithCoder
           define_method("#{attr_name}_changed?") do
             class_name.load( read_attribute(attr_name) ) != send(attr_name)
           end
+
+          define_method("#{attr_name}_change") do
+            send("#{attr_name}_changed?") ? [send("#{attr_name}_was"), send(attr_name)] : nil
+          end
+
+          define_method("#{attr_name}_was") do
+            class_name.load( read_attribute(attr_name) )
+          end
         end
       else
         raise "There is no column named #{attr_name}!"
-      end
-
-      define_method("attribute_for_inspect") do |attr_name|
-        value = @@serialized_with_coder_fields[attr_name.to_sym] ?
-          send(attr_name) :
-          read_attribute(attr_name)
-
-        if value.is_a?(String) && value.length > 50
-          "#{value[0..50]}...".inspect
-        elsif value.is_a?(Date) || value.is_a?(Time)
-          %("#{value.to_s(:db)}")
-        else
-          value.inspect
-        end
       end
 
       define_method("synchronize_serialized_fields") do

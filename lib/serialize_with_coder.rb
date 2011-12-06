@@ -36,7 +36,12 @@ module SerializeWithCoder
           end
 
           define_method("#{attr_name}_changed?") do
-            class_name.load( read_attribute(attr_name) ) != send(attr_name)
+            if instance_variable_get("@#{attr_name}_rchanged")
+              instance_variable_set("@#{attr_name}_rchanged", nil)
+              true
+            else
+              class_name.load( read_attribute(attr_name) ) != send(attr_name)
+            end
           end
 
           define_method("#{attr_name}_change") do
@@ -53,7 +58,10 @@ module SerializeWithCoder
 
       define_method("synchronize_serialized_fields") do
         @@serialized_with_coder_fields.each do |column, coder|
-          write_attribute(column, coder.dump( instance_variable_get("@#{column}") )) if send("#{column}_changed?")
+          if send("#{column}_changed?")
+            write_attribute(column, coder.dump( instance_variable_get("@#{column}") ))
+            instance_variable_set("@#{column}_rchanged", true)
+          end
         end
       end
 

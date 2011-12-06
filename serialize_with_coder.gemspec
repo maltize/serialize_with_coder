@@ -1,10 +1,10 @@
 Gem::Specification.new do |s|
   s.name        = 'serialize_with_coder'
-  s.version     = '0.1.2'
+  s.version     = '0.1.3'
 
   s.platform    = Gem::Platform::RUBY
 
-  s.date        = '2011-11-15'
+  s.date        = '2011-12-06'
   s.summary     = "Serialize with Coder"
   s.description = "serialize_with_coder is an ActiveRecord 2.x extended serialize function which acts like Rails 3.1 one - you can use custom coder as storing engine. Including 2 sample coders - CSV and JSON."
 
